@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "27897709037",
+    "project_id": "vizchat-1c5a5",
+    "storage_bucket": "vizchat-1c5a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27897709037:android:0285ba1a6ee0d597cee7e4",
+        "android_client_info": {
+          "package_name": "com.example.vizchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27897709037-r47e7vagp0qc93iu0mp0e10q06ee2j1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vizchat",
+            "certificate_hash": "8dfcd3cf66c08ace7ca88268ba392d8460ce8f53"
+          }
+        },
+        {
+          "client_id": "27897709037-bg5alsocipnhb9pe95t8ul7rq82qgder.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNVl2rw26hW1LrBmvQ03O_YzPCw8Lxlh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27897709037-bg5alsocipnhb9pe95t8ul7rq82qgder.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
