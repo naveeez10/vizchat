@@ -27,12 +27,12 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
+                const Text(
                   "VizChat",
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   "Login now to see what they are talking about!",
                   style: TextStyle(
                     fontSize: 15,
@@ -44,7 +44,17 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: textInputDecoration.copyWith(
                     labelText: "Email",
                     prefix: Icon(
-                        Icons.email,
+                      Icons.email,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                    labelText: "Password",
+                    prefix: Icon(
+                      Icons.key,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
