@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'package:vizchat/pages/auth/register_page.dart';
+import 'package:vizchat/shared/constants.dart';
 import '../../widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +13,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formkey = GlobalKey<FormState>();
+  String email = "";
+  String password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +48,26 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: textInputDecoration.copyWith(
                     labelText: "Email",
                     prefix: Icon(
-                      Icons.email,
+                      Icons.lock,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  onChanged: (val) {
+                    setState(() {
+                      email = val!;
+                    });
+                  },
+                  validator: (val) {
+                    return RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(val!)
+                        ? null
+                        : "Enter a Valid Email";
+                  },
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(height: 15),
                 TextFormField(
+                  obscureText: true,
                   decoration: textInputDecoration.copyWith(
                     labelText: "Password",
                     prefix: Icon(
@@ -58,7 +75,61 @@ class _LoginPageState extends State<LoginPage> {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  onChanged: (val) {
+                    setState(() {
+                      password = val;
+                    });
+                  },
+                  validator: (val) {
+                    if (val!.length < 6) {
+                      return "Password can't be less then 6 characters long";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: constants().primarycolor,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30))),
+                    child: const Text("Sign In",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        )),
+                    onPressed: () {
+                      login();
+                    },
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text.rich(TextSpan(
+                    text: "Don't have an account?  ",
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: "Register here",
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w800,
+                              decoration: TextDecoration.underline
+                          ),
+                          recognizer: TapGestureRecognizer()..onTap = () {
+                            nextScreen(context, const RegisterPage());
+                          })
+                    ],
+                    ))
               ],
             ),
           ),
@@ -66,4 +137,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  login() {}
 }
