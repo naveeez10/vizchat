@@ -178,20 +178,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   register() async {
     if (formkey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-      await authService
-          .registerUserWithEmailandPassword(fullname, email, password)
-          .then((value) async {
-            if(value == true) {
-              await HelperFunctions.saveUserLoggedInStatus(true);
-              await HelperFunctions.saveUserEmailSF(email);
-              await HelperFunctions.saveUsernameSF(fullname);
-              nextScreenreplace(context, const HomePage());
-            }
-            else {
-              showSnackBar(context,value,Colors.red);
+                setState(() {
+                  _isLoading = true;
+                });
+                await authService
+                    .registerUserWithEmailandPassword(fullname, email, password)
+                    .then((value) async {
+                  if(value == true) {
+                    await HelperFunctions.saveUserLoggedInStatus(true);
+                    await HelperFunctions.saveUserEmailSF(email);
+                    await HelperFunctions.saveUsernameSF(fullname);
+                    nextScreenreplace(context, const HomePage());
+                  }
+                  else {
+                    showSnackBar(context,value,Colors.red);
               setState(() {
                 _isLoading = false;
               });
