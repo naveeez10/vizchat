@@ -6,6 +6,7 @@ import 'package:vizchat/pages/search_page.dart';
 import 'package:vizchat/service/auth_service.dart';
 import 'package:vizchat/pages/profile_page.dart';
 import 'package:vizchat/service/database_service.dart';
+import 'package:vizchat/widgets/group_tile.dart';
 import '../widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,6 +28,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     gettingUserData();
+  }
+
+  String getId(String res) {
+    return res.substring(0, res.indexOf('_'));
+  }
+
+  String getName(String res) {
+    print(res.substring(res.indexOf('_') + 1));
+    return res.substring(res.indexOf('_') + 1);
   }
 
   gettingUserData() async {
@@ -243,15 +253,19 @@ class _HomePageState extends State<HomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if(groupName != "") {
+                  if (groupName != "") {
                     setState(() {
                       _isLoading = true;
                     });
-                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).createGroup(userName!, groupName, FirebaseAuth.instance.currentUser!.uid).whenComplete(() {
+                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                        .createGroup(userName!, groupName,
+                            FirebaseAuth.instance.currentUser!.uid)
+                        .whenComplete(() {
                       _isLoading = false;
                     });
                     Navigator.of(context).pop();
-                    showSnackBar(context, "Group Created Successfully", Colors.green);
+                    showSnackBar(
+                        context, "Group Created Successfully", Colors.green);
                   }
                 },
                 child: const Text("Create"),
@@ -270,7 +284,18 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
             if (snapshot.data['groups'].length != null) {
               if (snapshot.data['groups'].length != 0) {
-                return Text("Hello");
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    int ReverseIndex =
+                        snapshot.data['groups'].length - index - 1;
+                    return GroupTile(
+                        userName: userName!,
+                        groupName:
+                            getName(snapshot.data['groups'][ReverseIndex]),
+                        groupId: getId(snapshot.data['groups'][ReverseIndex]));
+                  },
+                  itemCount: snapshot.data['groups'].length,
+                );
               } else {
                 return noGroupWidget();
               }
