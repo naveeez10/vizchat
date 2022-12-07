@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vizchat/helper/helper_function.dart';
 import 'package:vizchat/service/auth_service.dart';
+import 'home_page.dart';
 
 import '../widgets/widgets.dart';
 import 'auth/login_page.dart';
@@ -107,7 +108,9 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 3,
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                nextScreen(context, HomePage());
+              },
               selectedColor: Theme.of(context).primaryColor,
               selected: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
