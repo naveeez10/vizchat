@@ -71,4 +71,47 @@ class DatabaseService {
   getGroupMembers(groupId) async {
     return groupCollection.doc(groupId).snapshots();
   }
+
+  searchGroupName(String groupName) {
+    return groupCollection.where("groupName", isEqualTo: groupName).get();
+  }
+
+  Future<bool> isUserJoined(
+      String groupName, String groupId, String userName) async {
+    DocumentReference userdocumentReference = userCollection.doc(uid);
+    DocumentSnapshot documentSnapshot = await userdocumentReference.get();
+    List<dynamic> groups = await documentSnapshot['groups'];
+    if (groups.contains("${groupId}_$groupName")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future toggleGroup(String groupId, String userName, String groupName) async {
+    DocumentReference userDocumentReference = userCollection.doc(uid);
+    DocumentReference groupDocumentReference = groupCollection.doc(groupId);
+
+    DocumentSnapshot documentSnapshot = await userDocumentReference.get();
+    List<dynamic> groups = await documentSnapshot['groups'];
+
+    if (groups.contains("${groupId}_$groupName")) {
+      print("contains");
+      await userDocumentReference.update({
+        "groups": FieldValue.arrayRemove(["${groupId}_$groupName"])
+      });
+      await groupDocumentReference.update({
+        "members": FieldValue.arrayRemove(["${uid}_$userName"])
+      });
+    }
+    else {
+      print("doesnt");
+      await userDocumentReference.update({
+        "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
+      });
+      await groupDocumentReference.update({
+        "members": FieldValue.arrayUnion(["${uid}_$userName"])
+      });
+    }
+  }
 }

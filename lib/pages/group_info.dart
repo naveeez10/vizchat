@@ -146,7 +146,7 @@ class _GroupInfoState extends State<GroupInfo> {
                       ),
                       subtitle: Text(
                         snapshot.data['members'][index].substring(0,snapshot.data['members'][index].indexOf('_')),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                           fontSize: 13
