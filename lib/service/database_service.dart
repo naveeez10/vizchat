@@ -103,15 +103,24 @@ class DatabaseService {
       await groupDocumentReference.update({
         "members": FieldValue.arrayRemove(["${uid}_$userName"])
       });
-    }
-    else {
+    } else {
       print("doesnt");
       await userDocumentReference.update({
         "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
       });
+
       await groupDocumentReference.update({
         "members": FieldValue.arrayUnion(["${uid}_$userName"])
       });
     }
+  }
+
+  sendMessage(String groupId, Map<String, dynamic> chatMessages) {
+    groupCollection.doc(groupId).collection("messages").add(chatMessages);
+    groupCollection.doc(groupId).update({
+      "recentMessage": chatMessages['message'],
+      "recentMessageSender": chatMessages['sender'],
+      "recentMessageTime": chatMessages['time'].toString(),
+    });
   }
 }

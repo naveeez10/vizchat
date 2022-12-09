@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vizchat/pages/home_page.dart';
 import 'package:vizchat/service/database_service.dart';
 import 'package:vizchat/widgets/member_tile.dart';
 
@@ -50,7 +51,52 @@ class _GroupInfoState extends State<GroupInfo> {
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.exit_to_app)),
+          IconButton(
+              onPressed: () async {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Exit?"),
+                        content:
+                            Text("Are you sure you want to exit the group?"),
+                        actions: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                              )),
+                          IconButton(
+                              onPressed: () async {
+                                await DatabaseService(
+                                        uid: FirebaseAuth
+                                            .instance.currentUser!.uid)
+                                    .toggleGroup(
+                                        widget.groupId,
+                                        FirebaseAuth.instance.currentUser!.uid
+                                            .substring(FirebaseAuth
+                                                    .instance.currentUser!.uid
+                                                    .indexOf("_") +
+                                                1),
+                                        widget.groupName);
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => const HomePage()),
+                                    (route) => false);
+                              },
+                              icon: const Icon(
+                                Icons.done,
+                                color: Colors.green,
+                              ))
+                        ],
+                      );
+                    });
+              },
+              icon: Icon(Icons.exit_to_app)),
         ],
       ),
       body: Container(
@@ -145,12 +191,12 @@ class _GroupInfoState extends State<GroupInfo> {
                             fontWeight: FontWeight.w400),
                       ),
                       subtitle: Text(
-                        snapshot.data['members'][index].substring(0,snapshot.data['members'][index].indexOf('_')),
+                        snapshot.data['members'][index].substring(
+                            0, snapshot.data['members'][index].indexOf('_')),
                         style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                          fontSize: 13
-                        ),
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: 13),
                       ),
                     ),
                   );
