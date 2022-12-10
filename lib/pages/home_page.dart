@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vizchat/helper/helper_function.dart';
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   Stream? groups;
   bool _isLoading = false;
   String groupName = "";
+  QuerySnapshot? searchSnapshot;
 
   @override
   void initState() {
@@ -75,7 +77,10 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: const Text(
           "Groups",
-          style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold,fontFamily: "Fonts/Mukta-Bold.ttf"),
+          style: TextStyle(
+              fontSize: 27,
+              fontWeight: FontWeight.bold,
+              fontFamily: "Fonts/Mukta-Bold.ttf"),
         ),
       ),
       drawer: Drawer(
@@ -252,20 +257,37 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Theme.of(context).primaryColor),
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (groupName != "") {
                     setState(() {
                       _isLoading = true;
                     });
-                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                        .createGroup(userName!, groupName,
-                            FirebaseAuth.instance.currentUser!.uid)
-                        .whenComplete(() {
-                      _isLoading = false;
+                    await DatabaseService()
+                        .searchGroupName(groupName)
+                        .then((snapshot) {
+                      setState(() {
+                        searchSnapshot = snapshot;
+                      });
                     });
-                    Navigator.of(context).pop();
-                    showSnackBar(
-                        context, "Group Created Successfully", Colors.green);
+                    if (searchSnapshot!.docs.isNotEmpty) {
+                      Navigator.of(context).pop();
+                      showSnackBar(
+                          context,
+                          "Group with the name $groupName already exists",
+                          Colors.red);
+                      _isLoading = false;
+                    } else {
+                      DatabaseService(
+                              uid: FirebaseAuth.instance.currentUser!.uid)
+                          .createGroup(userName!, groupName,
+                              FirebaseAuth.instance.currentUser!.uid)
+                          .whenComplete(() {
+                        _isLoading = false;
+                      });
+                      Navigator.of(context).pop();
+                      showSnackBar(
+                          context, "Group Created Successfully", Colors.green);
+                    }
                   }
                 },
                 child: const Text("Create"),
