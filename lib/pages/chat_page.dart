@@ -47,6 +47,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme
             .of(context)
@@ -83,7 +84,7 @@ class _ChatPageState extends State<ChatPage> {
             child: Container(
               height: 80,
               padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
-              color: Colors.grey[400],
+              color: Colors.grey[900],
               child: Row(
                 children: [
                   Expanded(

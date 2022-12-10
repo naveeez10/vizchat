@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vizchat/helper/helper_function.dart';
 import 'package:vizchat/pages/auth/login_page.dart';
 import 'package:vizchat/pages/home_page.dart';
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primaryColor: constants().primarycolor,
         scaffoldBackgroundColor: Colors.white,
+        fontFamily: "Fonts/Mukta-Regular.ttf"
       ),
       debugShowCheckedModeBanner: false,
       home: _isSignedIn ? HomePage() : LoginPage(),

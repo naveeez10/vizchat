@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: const Text(
           "Groups",
-          style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold,fontFamily: "Fonts/Mukta-Bold.ttf"),
         ),
       ),
       drawer: Drawer(

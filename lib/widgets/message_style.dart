@@ -31,8 +31,13 @@ class _MessageTileState extends State<MessageTile> {
             ? EdgeInsets.only(left: 30)
             : const EdgeInsets.only(right: 30),
         padding:
-            const EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
+            const EdgeInsets.only(top: 17, bottom: 17, left: 30, right: 35),
         decoration: BoxDecoration(
+          // boxShadow:  [
+            // BoxShadow(
+            //   color: Colors.black,
+            //   blurRadius: 12,
+            // )],
             borderRadius: widget.sentbyme
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -46,7 +51,7 @@ class _MessageTileState extends State<MessageTile> {
                   ),
             color: widget.sentbyme
                 ? Theme.of(context).primaryColor
-                : Colors.grey[500]),
+                : Colors.black54),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,7 +61,7 @@ class _MessageTileState extends State<MessageTile> {
               style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   letterSpacing: -0.5),
             ),
             const SizedBox(
@@ -67,7 +72,7 @@ class _MessageTileState extends State<MessageTile> {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16,
-                color: Colors.white
+                color: Colors.white,
               ),
             )
           ],

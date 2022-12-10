@@ -5,5 +5,5 @@ class constants {
   static String apiKey = "AIzaSyDpPVv7AFhSbfY_KbdU5KikCeiCPu_wK9M";
   static String messageSenderId= "vizchat-1c5a5";
   static String projectId = "27897709037";
-  final primarycolor = const Color(0xFFee7b64);
+  final primarycolor = const Color(0xFF0096C7);
 }
